@@ -17,14 +17,14 @@ module.exports = function(grunt){
          },
       },
 
-      rabbus: {
+      ocarina: {
         helpers: ["specs/helpers/**"],
         specs: ["specs/**/*.specs.js"]
       }
     },
 
     jshint: {
-      rabbus: {
+      ocarina: {
         src: ["lib/**/*.js"],
         options: {
           jshintrc: ".jshintrc"
@@ -39,7 +39,7 @@ module.exports = function(grunt){
     },
 
     watch: {
-      rabbus: {
+      ocarina: {
         files: ["lib/**/*.js", "specs/**/*.js"],
         tasks: ["specs"]
       }
@@ -47,9 +47,9 @@ module.exports = function(grunt){
 
   });
 
-  grunt.registerNpmTasks("grunt-contrib-jshint");
-  grunt.registerNpmTasks("grunt-contrib-watch");
-  grunt.registerNpmTasks("grunt-jasmine-nodejs");
+  grunt.loadNpmTasks("grunt-contrib-jshint");
+  grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks("grunt-jasmine-nodejs");
 
   grunt.registerTask("default", ["watch"]);
   grunt.registerTask("specs", ["jshint", "jasmine_nodejs"]);
