@@ -32,11 +32,10 @@
     "grunt-contrib-jshint": "0.12.0",
     "grunt-contrib-watch": "0.6.1",
     "grunt-jasmine-nodejs": "1.4.3",
-    "oracle": "^1.6.0",
-    "oracledb": "1.6.0"
+    "oracledb": "1.8.0"
   },
   "peerDependencies": {
-    "oracledb": "^1.6.0"
+    "oracledb": "^1.8.0"
   },
   "engines": {
     "node": ">= 4.2"
