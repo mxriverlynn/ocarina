@@ -1,6 +1,6 @@
 {
   "name": "ocarina",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Simplified API for Oracle, built on top of official orabledb library",
   "main": "lib/index.js",
   "scripts": {
@@ -41,6 +41,7 @@
     "node": ">= 4.2"
   },
   "dependencies": {
+    "oracledb": "1.8.0",
     "underscore": "1.8.3"
   }
 }
