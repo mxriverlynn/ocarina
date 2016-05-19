@@ -29,9 +29,6 @@ describe("Transactions across multiple calls", function(){
       Promise.all(pList)
         .then(function(resultList){
           results = resultList;
-          console.log("------------------------");
-          console.log(resultList);
-          console.log("------------------------");
           trans.commit((err) => {
             if (err) { console.log(err.stack); throw err; }
             done();

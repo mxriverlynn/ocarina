@@ -35,13 +35,12 @@
     "oracledb": "1.8.0"
   },
   "peerDependencies": {
-    "oracledb": "^1.8.0"
+    "oracledb": "1.8.0"
   },
   "engines": {
     "node": ">= 4.2"
   },
   "dependencies": {
-    "oracledb": "1.8.0",
     "underscore": "1.8.3"
   }
 }
