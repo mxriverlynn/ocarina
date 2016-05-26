@@ -2,21 +2,28 @@ var Oracle = require("oracledb");
 var Ocarina = require("../lib");
 
 describe("stored proc", function(){
+  var connection;
+
+  beforeEach((done) => {
+   Ocarina.ConnectionManager.getConnection((err, conn) => {
+     if (err) { throw err; }
+     connection = conn;
+     done();
+   });
+  });
 
   describe("when executing a stored proc", function(){
     var proc, result;
 
     beforeEach(function(testComplete){
-      proc = new Ocarina.StoredProc("NINJA_TEST.Test_Win");
+      proc = new Ocarina.StoredProc("NINJA_TEST.Test_Win", connection);
 
-      proc.exec(function(err, res, done){
+      proc.exec(function(err, res){
         if (err) { throw err; }
 
         result = res;
-        done((err) => {
-          if (err) { throw err; }
-          testComplete();
-        });
+        if (err) { throw err; }
+        testComplete();
       });
     });
 
@@ -29,7 +36,7 @@ describe("stored proc", function(){
     var proc, result;
 
     beforeEach(function(testComplete){
-      proc = new Ocarina.StoredProc("NINJA_TEST.DOES_NOT_EXIST");
+      proc = new Ocarina.StoredProc("NINJA_TEST.DOES_NOT_EXIST", connection);
 
       proc.exec(function(err){
         result = err;
@@ -40,6 +47,13 @@ describe("stored proc", function(){
     it("should return an error", function(){
       expect(result).not.toBeUndefined();
     });
+  });
+
+  afterEach((done) => {
+   connection.release((err) => {
+     if (err) { throw err; }
+     done();
+   });
   });
 
 });
