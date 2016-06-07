@@ -46,4 +46,25 @@ describe("Transactions across multiple calls", function(){
     });
   });
 
+  describe("when creating a transaction with an existing connection, and starting the transaction", function(){
+    var conn, result;
+
+    beforeEach(function(done){
+      conn = {};
+
+      var tx = new Ocarina.Transaction(conn);
+
+      tx.begin(function(err, conn) { 
+        if (err) { throw err; }
+        
+        result = conn;
+        done();
+      });
+    });
+    
+    it("should use the existing connection", function(){
+      expect(result).toBe(conn);
+    });
+  });
+
 });
