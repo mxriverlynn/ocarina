@@ -9,9 +9,10 @@ describe("Transactions across multiple calls", function(){
       var pList = [];
       var trans = new Ocarina.Transaction();
       trans.begin(function(err, connection){
+        if (err) { return fail(err); }
 
         pList.push(new Promise(function(res, rej){
-          var proc1 = new Ocarina.StoredProc("NINJA_TEST.Test_Win", connection);
+          var proc1 = new Ocarina.StoredProc("NINJA_TEST.Insert_1", connection);
           proc1.exec(function(err, result){
             if (err) { return rej(err); }
             res(result);
@@ -19,7 +20,7 @@ describe("Transactions across multiple calls", function(){
         }));
 
         pList.push(new Promise(function(res, rej){
-          var proc2 = new Ocarina.StoredProc("NINJA_TEST.Test_Win", connection);
+          var proc2 = new Ocarina.StoredProc("NINJA_TEST.Insert_2", connection);
           proc2.exec(function(err, result){
             if (err) { return rej(err); }
             res(result);
@@ -30,19 +31,27 @@ describe("Transactions across multiple calls", function(){
           .then(function(resultList){
             results = resultList;
             trans.commit((err) => {
-              if (err) { console.log(err.stack); throw err; }
+              if (err) { return fail(err); }
               done();
             });
           })
-          .catch(function(err){
-            setImmediate(() => { console.log(err.stack); throw err; });
-          });
+          .catch(fail);
       });
 
     });
 
     it("should commit the changes", function(){
       expect(results.length).toBe(2);
+    });
+
+    afterEach(function(done){
+      Ocarina.ConnectionManager.getConnection(function(err, connection){
+        var proc1 = new Ocarina.StoredProc("NINJA_TEST.Truncate_Test_Tables", connection);
+        proc1.exec(function(err, result){
+          if (err) { return fail(err); }
+          connection.release(done);
+        });
+      });
     });
   });
 
@@ -55,7 +64,7 @@ describe("Transactions across multiple calls", function(){
       var tx = new Ocarina.Transaction(conn);
 
       tx.begin(function(err, conn) { 
-        if (err) { throw err; }
+        if (err) { return fail(err); }
         
         result = conn;
         done();

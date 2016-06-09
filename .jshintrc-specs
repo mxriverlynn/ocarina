@@ -16,6 +16,7 @@
   "latedef": false,
   "esnext": true,
   "globals": {
+    "fail": true,
     "describe": true,
     "fdescribe": true,
     "xdescribe": true,

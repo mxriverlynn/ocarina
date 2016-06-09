@@ -6,7 +6,7 @@ describe("stored proc", function(){
 
   beforeEach((done) => {
    Ocarina.ConnectionManager.getConnection((err, conn) => {
-     if (err) { throw err; }
+     if (err) { return fail(err); }
      connection = conn;
      done();
    });
@@ -19,10 +19,9 @@ describe("stored proc", function(){
       proc = new Ocarina.StoredProc("NINJA_TEST.Test_Win", connection);
 
       proc.exec(function(err, res){
-        if (err) { throw err; }
+        if (err) { return fail(err); }
 
         result = res;
-        if (err) { throw err; }
         testComplete();
       });
     });
@@ -51,7 +50,7 @@ describe("stored proc", function(){
 
   afterEach((done) => {
    connection.release((err) => {
-     if (err) { throw err; }
+     if (err) { return fail(err); }
      done();
    });
   });
