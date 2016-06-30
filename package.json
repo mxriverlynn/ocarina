@@ -1,6 +1,6 @@
 {
   "name": "ocarina",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Simplified API for Oracle, built on top of official orabledb library",
   "main": "lib/index.js",
   "scripts": {
